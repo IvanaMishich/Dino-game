@@ -12,6 +12,10 @@ class Players(models.Model):
         verbose_name="Очки",
         default=0
     )
+    email = models.CharField(
+        max_length=50,
+        verbose_name="Email"
+    )
     objects = Manager()
 
 
