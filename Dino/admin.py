@@ -1,3 +1,8 @@
 from django.contrib import admin
+from .models import Players
 
-# Register your models here.
+@admin.register(Players)
+class PlayersAdmin(admin.ModelAdmin):
+    list_display = ('login', 'score')
+    search_fields = ('login',)
+    ordering = ('login',)
