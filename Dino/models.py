@@ -14,7 +14,8 @@ class Players(models.Model):
     )
     email = models.CharField(
         max_length=50,
-        verbose_name="Email"
+        verbose_name="Email",
+        default='-'
     )
     objects = Manager()
 
