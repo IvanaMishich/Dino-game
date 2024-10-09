@@ -16,6 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from Dino.views import PlayersViewSet, LevelsViewSet
 
 urlpatterns = [
     path('admin/', admin.site.urls),

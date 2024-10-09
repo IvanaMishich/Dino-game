@@ -13,4 +13,4 @@ class LevelsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Levels
-        fields =  '__all__'
+        fields = '__all__'
