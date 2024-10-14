@@ -16,8 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-from Dino.views import PlayersViewSet, LevelsViewSet
 from rest_framework import routers
+
+from Dino.views import PlayersViewSet, LevelsViewSet
 
 
 router = routers.DefaultRouter()

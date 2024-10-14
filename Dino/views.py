@@ -1,9 +1,10 @@
 from django.shortcuts import render
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets
 from rest_framework.response import Response
+
 from .models import Players, Levels
 from .serializers import PlayersSerializer, LevelsSerializer
-from django_filters.rest_framework import DjangoFilterBackend
 
 
 class PlayersViewSet(viewsets.ModelViewSet):

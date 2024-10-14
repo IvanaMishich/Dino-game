@@ -1,7 +1,9 @@
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from django.core.mail import send_mail
+
 from .models import Players
+
 
 @receiver(pre_save, sender=Players)
 def send_message(sender, instance, **kwargs):

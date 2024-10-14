@@ -1,5 +1,8 @@
 from django.db import models
+
 from .managers import Manager
+
+
 class Levels(models.Model):
     level = models.IntegerField(
         verbose_name="Уровень",
