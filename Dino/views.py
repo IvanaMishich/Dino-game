@@ -3,15 +3,15 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets
 from rest_framework.response import Response
 
-from .models import Players, Levels
-from .serializers import PlayersSerializer, LevelsSerializer
+from .models import CustomUser, Levels
+from .serializers import UsersSerializer, LevelsSerializer
 
 
-class PlayersViewSet(viewsets.ModelViewSet):
-    queryset = Players.objects.all()
-    serializer_class = PlayersSerializer
+class UsersViewSet(viewsets.ModelViewSet):
+    queryset = CustomUser.objects.all()
+    serializer_class = UsersSerializer
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['login', 'score', 'level']
+    filterset_fields = ['username', 'score', 'level']
 
 
 class LevelsViewSet(viewsets.ModelViewSet):

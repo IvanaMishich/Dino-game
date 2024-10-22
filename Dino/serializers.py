@@ -1,16 +1,16 @@
 from rest_framework import serializers
 
-from .models import Players, Levels
+from .models import CustomUser, Levels
 
 
-class PlayersSerializer(serializers.ModelSerializer):
+class UsersSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Players
+        model = CustomUser
         fields = '__all__'
 
 
 class LevelsSerializer(serializers.ModelSerializer):
-    players = PlayersSerializer(many=True, read_only=True)
+    players_levels = UsersSerializer(many=True, read_only=True)
 
     class Meta:
         model = Levels

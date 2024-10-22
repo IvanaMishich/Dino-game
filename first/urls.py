@@ -18,11 +18,11 @@ from django.contrib import admin
 from django.urls import include, path
 from rest_framework import routers
 
-from Dino.views import PlayersViewSet, LevelsViewSet
+from Dino.views import UsersViewSet, LevelsViewSet
 
 
 router = routers.DefaultRouter()
-router.register(r'players', PlayersViewSet)
+router.register(r'players', UsersViewSet)
 router.register(r'levels', LevelsViewSet)
 
 urlpatterns = [
