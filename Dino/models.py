@@ -40,8 +40,3 @@ class CustomUser(AbstractUser):
         blank=True,
         help_text='Specific permissions for this user.'
     )
-
-
-
-
-
