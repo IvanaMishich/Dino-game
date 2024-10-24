@@ -26,7 +26,8 @@ class CustomUser(AbstractUser):
         on_delete=models.SET_NULL,
         null=True,
         verbose_name="Уровень",
-        related_name="players_levels"
+        related_name="players_levels",
+        default=1
     )
     groups = models.ManyToManyField(
         Group,
