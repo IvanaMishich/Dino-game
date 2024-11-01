@@ -19,7 +19,7 @@ from django.contrib.auth import views as auth_views
 from django.urls import include, path
 from rest_framework import routers
 
-from Dino.views import UsersViewSet, LevelsViewSet, registration
+from Dino.views import UsersViewSet, LevelsViewSet, registration, index
 
 
 router = routers.DefaultRouter()
@@ -28,6 +28,7 @@ router.register(r'levels', LevelsViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', index, name='index'),
     path('', include(router.urls)),
     path('register/', registration, name='register'),
     path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),

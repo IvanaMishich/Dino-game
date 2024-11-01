@@ -8,6 +8,10 @@ from .models import CustomUser, Levels
 from .serializers import UsersSerializer, LevelsSerializer
 
 
+def index(request):
+    return render(request, 'index.html')
+
+
 class UsersViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
     serializer_class = UsersSerializer
