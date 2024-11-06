@@ -67,7 +67,7 @@ function create() {
     this.physics.add.collider(this.player, this.stoneGroup);
 
     this.ground = this.physics.add.staticGroup();
-    this.ground.create(game.config.width / 2, game.config.height - 5, null).refreshBody().setAlpha(0);
+    this.ground.create(game.config.width / 2, game.config.height - 5, null).setDisplaySize(6000, 10).setSize(6000, 10).refreshBody().setAlpha(0);
     this.physics.add.collider(this.player, this.ground);
 }
 
