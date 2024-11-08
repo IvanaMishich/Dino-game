@@ -24,7 +24,7 @@ function preload() {
 function enemies_way(enemy) {
     enemy.minX = enemy.x - 500;
     enemy.maxX = enemy.x;
-    enemy.speed = 200;
+    enemy.speed = 300;
     enemy.direction = -1;
 }
 
@@ -62,6 +62,32 @@ function sushi_direction(sushi) {
     sushi.setVelocityY(sushi.speed * sushi.direction);
 }
 
+function ScoreToBackend(score) {
+    this.physics.pause()
+    if (playerID) {
+        fetch('/players/${playerID}/', {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({score})
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Score updated successfully:', data);
+            })
+            .catch(error => {
+                console.error('Error updating score:', error);
+            });
+    } else {
+         console.log("Player not logged in, score not sent.");
+    }
+}
 function create() {
     this.background = this.add.tileSprite(0, 0, 12000, game.config.height, 'background').setOrigin(0, 0);
     this.cameras.main.setBounds(0, 0, 12000, game.config.height);
@@ -87,22 +113,22 @@ function create() {
 
     this.stoneGroup = this.physics.add.staticGroup();
     this.stoneGroup.create(500, 495, 'stone1').setSize(100, 150);
-    this.stoneGroup.create(1100, 428, 'stone2').setSize(200, 250);
+    this.stoneGroup.create(1100, 428, 'stone2').setSize(100, 250);
     this.stoneGroup.create(1750, 480, 'stone3').setSize(100, 150);
     this.stoneGroup.create(3000, 380, 'stone4').setSize(230, 320);
     this.stoneGroup.create(4600, 460, 'stone5').setSize(130, 180);
-    this.stoneGroup.create(6200, 428, 'stone2').setSize(200, 250);
+    this.stoneGroup.create(6200, 428, 'stone2').setSize(100, 250);
     this.stoneGroup.create(6800, 495, 'stone1').setSize(100, 150);
     this.stoneGroup.create(7300, 380, 'stone4').setSize(230, 320);
     this.stoneGroup.create(8350, 460, 'stone5').setSize(130, 180);
-    this.stoneGroup.create(10200, 428, 'stone2').setSize(200, 250);
+    this.stoneGroup.create(10200, 428, 'stone2').setSize(100, 250);
 
-    this.enemy1 = this.physics.add.sprite(2500, 520, 'enemy1').setOffset(15, 15);
-    this.enemy2 = this.physics.add.sprite(3800, 520, 'enemy2').setOffset(15, 15);
+    this.enemy1 = this.physics.add.sprite(2500, 520, 'enemy1').setOffset(20, 15);
+    this.enemy2 = this.physics.add.sprite(3800, 520, 'enemy2').setOffset(20, 15);
     this.enemy3 = this.physics.add.sprite(5800, 530, 'enemy3').setOffset(20, 20);
-    this.enemy4 = this.physics.add.sprite(9100, 520, 'enemy4').setOffset(15, 20);
-    this.enemy5 = this.physics.add.sprite(8100, 520, 'enemy1').setOffset(15, 15);
-    this.enemy6 = this.physics.add.sprite(9900, 520, 'enemy2').setOffset(15, 15);
+    this.enemy4 = this.physics.add.sprite(9100, 520, 'enemy4').setOffset(20, 20);
+    this.enemy5 = this.physics.add.sprite(8100, 520, 'enemy1').setOffset(20, 15);
+    this.enemy6 = this.physics.add.sprite(9900, 520, 'enemy2').setOffset(20, 15);
     this.enemy1.setCollideWorldBounds(true);
     this.enemy2.setCollideWorldBounds(true);
     this.enemy3.setCollideWorldBounds(true);
@@ -170,28 +196,23 @@ function hitEnemy(player, enemy) {
   }
 }
 
-function Final(score) {
-    this.physics.pause()
-    console.log(`Congratulations! Your score: ${score}`);
-}
-
 function update() {
     if (this.player.body.touching.down) {
         this.jumpsinair = 0;
     }
     if (this.cursors.left.isDown) {
         this.player.setFlipX(true);
-        this.player.setVelocityX(-350);
+        this.player.setVelocityX(-320);
         this.cameras.main.stopFollow();
     } else if (this.cursors.right.isDown) {
         this.player.setFlipX(false);
-        this.player.setVelocityX(350);
+        this.player.setVelocityX(320);
     } else {
         this.player.setVelocityX(0);
     }
 
-    if (Phaser.Input.Keyboard.JustDown(this.spaceKey) && this.jumpsinair <= 2) {
-        this.player.setVelocityY(-500);
+    if (Phaser.Input.Keyboard.JustDown(this.spaceKey) && this.jumpsinair <= 1) {
+        this.player.setVelocityY(-450);
         this.jumpsinair++;
     }
 
@@ -201,7 +222,7 @@ function update() {
     }
 
     if (this.player.x > 11700) {
-        Final(sc);
+        ScoreToBackend(sc)
     }
 
     enemies_direction(this.enemy1);

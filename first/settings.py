@@ -139,3 +139,5 @@ AUTH_USER_MODEL = 'Dino.CustomUser'
 STATICFILES_DIRS = [
     BASE_DIR / "frontend",
 ]
+
+LOGIN_URL = '/login/'

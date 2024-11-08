@@ -11,5 +11,8 @@
 <body>
     <div id="game_container"></div>
     <script src="{% static 'game.js' %}"></script>
+    <script>
+        var playerID = {{ player_id|default_if_none:"null" }};
+    </script>
 </body>
 </html>

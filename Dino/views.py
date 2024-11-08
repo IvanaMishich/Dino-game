@@ -1,15 +1,12 @@
 from django.shortcuts import render, redirect
 from django_filters.rest_framework import DjangoFilterBackend
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
 from rest_framework import viewsets
 from rest_framework import permissions
 
 from .models import CustomUser, Levels
 from .serializers import UsersSerializer, LevelsSerializer
-
-
-def index(request):
-    return render(request, 'index.html')
 
 
 class UsersViewSet(viewsets.ModelViewSet):
@@ -45,3 +42,12 @@ def registration(request):
     else:
         form = UserCreationForm()
     return render(request, 'register.html', {'form': form})
+
+
+@login_required
+def index(request):
+    user = request.user
+    context = {
+        'player_id': user.id
+    }
+    return render(request, 'index.html', context)
