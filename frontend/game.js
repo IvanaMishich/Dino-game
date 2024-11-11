@@ -65,7 +65,7 @@ function sushi_direction(sushi) {
 function ScoreToBackend(score) {
     this.physics.pause()
     if (playerID) {
-        fetch('/players/${playerID}/', {
+        fetch(`/players/${playerID}/`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
@@ -222,7 +222,7 @@ function update() {
     }
 
     if (this.player.x > 11700) {
-        ScoreToBackend(sc)
+        ScoreToBackend.call(this, sc);
     }
 
     enemies_direction(this.enemy1);
