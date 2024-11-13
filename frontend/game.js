@@ -1,5 +1,5 @@
 
-let sc = 0
+let sc = 0;
 
 function preload() {
     this.load.image('Dino', 'static/images/Dino.png');
@@ -63,31 +63,25 @@ function sushi_direction(sushi) {
 }
 
 function ScoreToBackend(score) {
-    this.physics.pause()
-    if (playerID) {
-        fetch(`/players/${playerID}/`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({score})
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log('Score updated successfully:', data);
-            })
-            .catch(error => {
-                console.error('Error updating score:', error);
-            });
-    } else {
-         console.log("Player not logged in, score not sent.");
-    }
+    fetch(`/players/${playerID}/`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': document.querySelector('meta[name="csrf-token"]').content
+        },
+        body: JSON.stringify({score})
+    }).then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    }).then(data => {
+        console.log('Score updated successfully:', data);
+    }).catch(error => {
+        console.error('Error updating score:', error);
+    });
 }
+
 function create() {
     this.background = this.add.tileSprite(0, 0, 12000, game.config.height, 'background').setOrigin(0, 0);
     this.cameras.main.setBounds(0, 0, 12000, game.config.height);
@@ -105,7 +99,7 @@ function create() {
     this.sushiGroup.create(6900, 120, 'sushi5');
     this.sushiGroup.create(7600, 250, 'sushi1');
     this.sushiGroup.create(8200, 220, 'sushi2');
-    this.sushiGroup.create(8900, 450, 'sushi4')
+    this.sushiGroup.create(8900, 450, 'sushi4');
 
     this.sushiGroup.children.iterate((sushi) => {
         sushi_way(sushi);
@@ -171,6 +165,32 @@ function create() {
     this.physics.add.collider(this.player, this.enemy4, hitEnemy, null, this);
     this.physics.add.collider(this.player, this.enemy5, hitEnemy, null, this);
     this.physics.add.collider(this.player, this.enemy6, hitEnemy, null, this);
+
+    this.modal = this.add.graphics();
+    this.modal.fillStyle(0x000000, 0.8);
+    this.modal.fillRect(12000 - game.config.width, 0, game.config.width, game.config.height);
+
+    this.text = this.add.text(12000 - (game.config.width / 2), game.config.height / 2, 'Save your score by logging in!', { fontSize: '32px', fill: '#ffffff' });
+    this.text.setOrigin(0.5);
+
+    this.loginButton = this.add.text(12000 - (game.config.width / 2), game.config.height / 2 + 50, 'Login', { fontSize: '24px', fill: '#00ff00' });
+    this.loginButton.setOrigin(0.5);
+    this.loginButton.setInteractive();
+    this.loginButton.on('pointerdown', function () {
+        window.location.href = '/login/';
+    });
+
+    this.registerButton = this.add.text(12000 - (game.config.width / 2), game.config.height / 2 + 100, 'Register', { fontSize: '24px', fill: '#00ff00' });
+    this.registerButton.setOrigin(0.5);
+    this.registerButton.setInteractive();
+    this.registerButton.on('pointerdown', function () {
+        window.location.href = '/register/';
+    });
+
+    this.modal.setVisible(false);
+    this.text.setVisible(false);
+    this.loginButton.setVisible(false);
+    this.registerButton.setVisible(false);
 }
 
 function collectSushi(player, sushi) {
@@ -195,6 +215,8 @@ function hitEnemy(player, enemy) {
       sc = 0;
   }
 }
+
+let scoreSent = false;
 
 function update() {
     if (this.player.body.touching.down) {
@@ -221,8 +243,18 @@ function update() {
         this.background.tilePositionX = this.cameras.main.scrollX * 0.1;
     }
 
-    if (this.player.x > 11700) {
-        ScoreToBackend.call(this, sc);
+    if (this.player.x > 11700 && !scoreSent) {
+        this.physics.pause();
+
+        if (!playerID) {
+            this.modal.setVisible(true);
+            this.text.setVisible(true);
+            this.loginButton.setVisible(true);
+            this.registerButton.setVisible(true);
+        } else {
+            ScoreToBackend.call(this, sc);
+            scoreSent = true;
+        }
     }
 
     enemies_direction(this.enemy1);

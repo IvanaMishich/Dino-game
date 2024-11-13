@@ -22,4 +22,5 @@ def send_message(sender, instance, **kwargs):
                            fail_silently=False,
             )
         else:
-            instance.score = old_score
+            if not instance.is_staff:
+                instance.score = old_score

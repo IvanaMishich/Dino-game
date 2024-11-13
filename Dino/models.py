@@ -4,6 +4,7 @@ from django.contrib.auth.models import AbstractUser, Group, Permission
 
 class Levels(models.Model):
     level = models.IntegerField(
+        null=True,
         verbose_name="Уровень",
     )
     min_score = models.IntegerField(
@@ -41,3 +42,4 @@ class CustomUser(AbstractUser):
         blank=True,
         help_text='Specific permissions for this user.'
     )
+
