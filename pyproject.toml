@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "first-project"
+version = "0.1.0"
+description = ""
+authors = ["IvanaMishich <ivana.mishich@rambler.ru>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.10,<4.0"
+django = "^5.1.1"
+psycopg2 = "^2.9.9"
+python-dotenv = "^1.0.1"
+djangorestframework = "^3.15.2"
+django-filter = "^24.3"
+pygame = "^2.6.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
