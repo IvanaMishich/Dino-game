@@ -212,7 +212,35 @@ function hitEnemy(player, enemy) {
       this.physics.pause();
       player.setTint(0xff0000);
 
-      sc = 0;
+      if (!playerID) {
+          this.text = this.add.text(player.x - (game.config.width / 4.5), game.config.height / 3, 'Game over. Save your score by logging in!', { fontSize: '32px', fill: '#ffffff' });
+          this.modal.fillRect(player.x - (game.config.width / 2), 0, game.config.width + 10, game.config.height);
+          this.loginButton = this.add.text(player.x - 10, game.config.height / 2 - 10, 'Login', { fontSize: '30px', fill: '#00ff00' });
+          this.loginButton.setOrigin(0.5);
+          this.loginButton.setInteractive();
+          this.loginButton.on('pointerdown', function () {
+              window.location.href = '/login/' + '?score=' + sc;
+          });
+          this.registerButton = this.add.text(player.x - 10, game.config.height / 2 + 40, 'Register', { fontSize: '30px', fill: '#00ff00' });
+          this.registerButton.setOrigin(0.5);
+          this.registerButton.setInteractive();
+          this.registerButton.on('pointerdown', function () {
+              window.location.href = '/register/' + '?score=' + sc;
+          });
+          this.retryButton = this.add.text(player.x - 10, game.config.height / 2 + 135, 'Retry', { fontSize: '30px', fill: '#e1fa00' });
+          this.retryButton.setOrigin(0.5);
+          this.retryButton.setInteractive();
+          this.retryButton.on('pointerdown', function () {
+              window.location.href = '/';
+          });
+          this.modal.setVisible(true);
+          this.text.setVisible(true);
+          this.loginButton.setVisible(true);
+          this.registerButton.setVisible(true);
+      } else {
+          ScoreToBackend.call(this, sc);
+          scoreSent = true;
+      }
   }
 }
 

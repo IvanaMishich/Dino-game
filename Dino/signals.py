@@ -14,13 +14,16 @@ def send_message(sender, instance, **kwargs):
         old_score = sender.objects.get(pk=instance.pk)
         old_score = old_score.score
         if instance.score > old_score:
-            send_mail(
-                'Новый рекорд!',
-                f'Поздравляем! Вы побили новый рекорд:\n {instance.score} очков',
-                'game.info.users@gmail.com',
-                [instance.email],
-                           fail_silently=False,
-            )
+            try:
+                send_mail(
+                    'Новый рекорд!',
+                    f'Поздравляем! Вы побили новый рекорд:\n {instance.score} очков',
+                    'game.info.users@gmail.com',
+                    [instance.email],
+                    fail_silently=False,
+                )
+            except Exception as e:
+                pass
         else:
             if not instance.is_staff:
                 instance.score = old_score
