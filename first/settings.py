@@ -27,9 +27,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure--h+0zu=31z=jescbjta06_x!ds1*&9gxk%x3fp+j46lz0brm3z'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['dino-game-production-e582.up.railway.app']
+ALLOWED_HOSTS = ['127.0.0.1', 'dino-game-production-e582.up.railway.app']
 
 
 # Application definition
