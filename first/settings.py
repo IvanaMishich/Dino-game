@@ -145,3 +145,5 @@ STATICFILES_DIRS = [
 ]
 
 LOGIN_URL = '/login/'
+
+CSRF_TRUSTED_ORIGINS = ['https://dino-game-production-e582.up.railway.app']
