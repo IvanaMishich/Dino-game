@@ -191,11 +191,14 @@ function create() {
     this.text.setVisible(false);
     this.loginButton.setVisible(false);
     this.registerButton.setVisible(false);
+
+    this.ScoreText = this.add.text(10, 10, `SCORE: ${sc}`, { fontSize: '30px', fontFamily: 'Calibri', fill: '#ff1b79' });
 }
 
 function collectSushi(player, sushi) {
     sushi.disableBody(true, true); // Make the sushi disappear
     sc += 1;
+    this.ScoreText.text = `SCORE: ${sc}`;
 }
 
 function hitEnemy(player, enemy) {
@@ -239,6 +242,15 @@ function hitEnemy(player, enemy) {
           this.registerButton.setVisible(true);
       } else {
           ScoreToBackend.call(this, sc);
+          this.modal.fillRect(player.x - (game.config.width / 2), 0, game.config.width + 10, game.config.height);
+          this.modal.setVisible(true);
+          this.retryButton = this.add.text(player.x - 20, game.config.height / 2, 'Retry', { fontSize: '34px', fill: '#e1fa00' });
+          this.retryButton.setOrigin(0.5);
+          this.retryButton.setInteractive();
+          this.retryButton.on('pointerdown', function () {
+              window.location.href = '/';
+          });
+          this.retryButton.setVisible(true);
           scoreSent = true;
       }
   }
@@ -269,6 +281,7 @@ function update() {
     if (this.player.x > game.config.width / 2 && this.cameras.main.scrollX < this.background.width - game.config.width) {
         this.cameras.main.scrollX = this.player.x - game.config.width / 2;
         this.background.tilePositionX = this.cameras.main.scrollX * 0.1;
+        this.ScoreText.x = this.player.x + 10 - game.config.width / 2;
     }
 
     if (this.player.x > 11700 && !scoreSent) {
@@ -281,6 +294,15 @@ function update() {
             this.registerButton.setVisible(true);
         } else {
             ScoreToBackend.call(this, sc);
+            this.modal.setVisible(true);
+            this.retryButton = this.add.text(12000 - (game.config.width / 2), game.config.height / 2, 'Retry', { fontSize: '34px', fill: '#e1fa00' });
+            this.retryButton.setOrigin(0.5);
+            this.retryButton.setInteractive();
+            this.retryButton.on('pointerdown', function () {
+                window.location.href = '/';
+            });
+            this.retryButton.setVisible(true);
+
             scoreSent = true;
         }
     }
@@ -317,3 +339,4 @@ const config = {
     }
 };
 const game = new Phaser.Game(config);
+
