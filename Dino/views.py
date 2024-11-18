@@ -49,7 +49,7 @@ def registration(request):
         if form.is_valid():
             score = form.cleaned_data.get('score')
             user = form.save(commit=False) # Создаем пользователя, но не сохраняем его сразу
-            if score is not None:
+            if score.isdigit():
                 user.score = score
             user.save()
             return redirect('login')
