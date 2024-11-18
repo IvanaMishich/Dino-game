@@ -65,7 +65,7 @@ class CustomLoginView(auth_views.LoginView):
         score = self.request.POST.get('score')
         user = form.get_user()
 
-        if score is not None:
+        if score.isdigit():
             user.score = int(score)
             user.save()
 
