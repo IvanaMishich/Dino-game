@@ -49,7 +49,7 @@ def registration(request):
         if form.is_valid():
             score = form.cleaned_data.get('score')
             user = form.save(commit=False) # Создаем пользователя, но не сохраняем его сразу
-            if score.isdigit():
+            if str(score).isdigit():
                 user.score = score
             user.save()
             return redirect('login')
@@ -65,7 +65,7 @@ class CustomLoginView(auth_views.LoginView):
         score = self.request.POST.get('score')
         user = form.get_user()
 
-        if score.isdigit():
+        if str(score).isdigit():
             user.score = int(score)
             user.save()
 
