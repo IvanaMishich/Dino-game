@@ -4,14 +4,15 @@
     <meta charset="UTF-8">
     <title>Вход</title>
 </head>
-<body>
-    <h2>Вход</h2>
-    <form method="post">
+<body style="text-align: center; font-family: Georgia; background: radial-gradient(circle, #bcfff7, #ffd2e1);">
+    <h2 style="letter-spacing: 1px; font-size: 36px; color: #06b0ab;">Вход</h2>
+    <form method="post" style="font-size: 20px;">
         {% csrf_token %}
         {{ form.as_p }}
         <input type="hidden" name="score" value="{{ request.GET.score }}">
-        <button type="submit">Войти</button>
+        <button type="submit" style="font-size: 17px; font-family: Georgia;">Войти</button>
     </form>
-    <a href="{% url 'register' %}">Зарегистрироваться</a>
+    <p><a href="{% url 'register' %}" style="line-height: 2; text-decoration: none; font-weight: bold; font-size: 21px; color: #fc648e;">Зарегистрироваться</a>
+    </p>
 </body>
 </html>
