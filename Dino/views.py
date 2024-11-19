@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect
 from django_filters.rest_framework import DjangoFilterBackend
 from django.contrib.auth import views as auth_views
 from .forms import CustomUserCreationForm, CustomLoginForm
-from rest_framework import viewsets
-from rest_framework import permissions
+from rest_framework import viewsets, permissions
+
 
 from .models import CustomUser, Levels
 from .serializers import UsersSerializer, LevelsSerializer
@@ -29,6 +29,11 @@ class UsersViewSet(viewsets.ModelViewSet):
         elif self.action in ['update', 'partial_update']:
             return [permissions.IsAuthenticated()]
         return [permissions.IsAdminUser()]
+
+
+def top10(request):
+    top = CustomUser.objects.order_by('-score')[:10]
+    return render(request, 'top10.html', {'top10': top})
 
 
 class LevelsViewSet(viewsets.ModelViewSet):
