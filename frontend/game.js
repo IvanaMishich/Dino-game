@@ -170,29 +170,37 @@ function create() {
     this.modal.fillStyle(0x000000, 0.8);
     this.modal.fillRect(12000 - game.config.width, 0, game.config.width, game.config.height);
 
-    this.text = this.add.text(12000 - (game.config.width / 2), game.config.height / 2, 'Save your score by logging in!', { fontSize: '32px', fill: '#ffffff' });
+    this.text = this.add.text(12000 - (game.config.width / 2), game.config.height / 2, 'Save your score by logging in!', { fontSize: '32px', fontFamily: 'Georgia', fill: '#ffffff' });
     this.text.setOrigin(0.5);
 
-    this.loginButton = this.add.text(12000 - (game.config.width / 2), game.config.height / 2 + 50, 'Login', { fontSize: '24px', fill: '#00ff00' });
+    this.loginButton = this.add.text(12000 - (game.config.width / 2), game.config.height / 2 + 50, 'Login', { fontSize: '24px', fontFamily: 'Georgia', fill: '#00ff00' });
     this.loginButton.setOrigin(0.5);
     this.loginButton.setInteractive();
     this.loginButton.on('pointerdown', function () {
         window.location.href = '/login/';
     });
 
-    this.registerButton = this.add.text(12000 - (game.config.width / 2), game.config.height / 2 + 100, 'Register', { fontSize: '24px', fill: '#00ff00' });
+    this.registerButton = this.add.text(12000 - (game.config.width / 2), game.config.height / 2 + 100, 'Register', { fontSize: '24px', fontFamily: 'Georgia', fill: '#00ff00' });
     this.registerButton.setOrigin(0.5);
     this.registerButton.setInteractive();
     this.registerButton.on('pointerdown', function () {
         window.location.href = '/register/';
     });
 
+    this.top10Button = this.add.text(12000 - (game.config.width / 2), game.config.height / 2 + 60, 'Top-10 players', { fontSize: '34px', fontFamily: 'Georgia', fill: '#e1fa00' });
+    this.top10Button.setOrigin(0.5);
+    this.top10Button.setInteractive();
+    this.top10Button.on('pointerdown', function () {
+        window.location.href = 'top10/';
+    });
+
     this.modal.setVisible(false);
     this.text.setVisible(false);
     this.loginButton.setVisible(false);
     this.registerButton.setVisible(false);
+    this.top10Button.setVisible(false);
 
-    this.ScoreText = this.add.text(10, 10, `SCORE: ${sc}`, { fontSize: '30px', fontFamily: 'Calibri', fill: '#ff1b79' });
+    this.ScoreText = this.add.text(10, 10, `SCORE: ${sc}`, { fontSize: '30px', fontFamily: 'Georgia', fill: '#ff1b79' });
 }
 
 function collectSushi(player, sushi) {
@@ -216,41 +224,56 @@ function hitEnemy(player, enemy) {
       player.setTint(0xff0000);
 
       if (!playerID) {
-          this.text = this.add.text(player.x - (game.config.width / 4.5), game.config.height / 3, 'Game over. Save your score by logging in!', { fontSize: '32px', fill: '#ffffff' });
+          this.text = this.add.text(player.x - (game.config.width / 4.5), game.config.height / 3, 'Game over. Save your score by logging in!', { fontSize: '32px', fontFamily: 'Georgia', fill: '#ffffff' });
           this.modal.fillRect(player.x - (game.config.width / 2), 0, game.config.width + 10, game.config.height);
-          this.loginButton = this.add.text(player.x - 10, game.config.height / 2 - 10, 'Login', { fontSize: '30px', fill: '#00ff00' });
+          this.loginButton = this.add.text(player.x - 10, game.config.height / 2 - 10, 'Login', { fontSize: '30px', fontFamily: 'Georgia', fill: '#00ff00' });
           this.loginButton.setOrigin(0.5);
           this.loginButton.setInteractive();
           this.loginButton.on('pointerdown', function () {
               window.location.href = '/login/' + '?score=' + sc;
           });
-          this.registerButton = this.add.text(player.x - 10, game.config.height / 2 + 40, 'Register', { fontSize: '30px', fill: '#00ff00' });
+          this.registerButton = this.add.text(player.x - 10, game.config.height / 2 + 40, 'Register', { fontSize: '30px', fontFamily: 'Georgia', fill: '#00ff00' });
           this.registerButton.setOrigin(0.5);
           this.registerButton.setInteractive();
           this.registerButton.on('pointerdown', function () {
               window.location.href = '/register/' + '?score=' + sc;
           });
-          this.retryButton = this.add.text(player.x - 10, game.config.height / 2 + 135, 'Retry', { fontSize: '30px', fill: '#e1fa00' });
+          this.retryButton = this.add.text(player.x - 10, game.config.height / 2 + 135, 'Retry', { fontSize: '30px', fontFamily: 'Georgia', fill: '#e1fa00' });
           this.retryButton.setOrigin(0.5);
           this.retryButton.setInteractive();
           this.retryButton.on('pointerdown', function () {
               window.location.href = '/';
+          });
+          this.top10Button = this.add.text(player.x - 20, game.config.height / 2 + 60, 'Top-10 players', { fontSize: '34px', fontFamily: 'Georgia', fill: '#e1fa00' });
+          this.top10Button.setOrigin(0.5);
+          this.top10Button.setInteractive();
+          this.top10Button.on('pointerdown', function () {
+              window.location.href = 'top10/';
           });
           this.modal.setVisible(true);
           this.text.setVisible(true);
           this.loginButton.setVisible(true);
           this.registerButton.setVisible(true);
+          this.top10Button.setVisible(true);
       } else {
           ScoreToBackend.call(this, sc);
           this.modal.fillRect(player.x - (game.config.width / 2), 0, game.config.width + 10, game.config.height);
           this.modal.setVisible(true);
-          this.retryButton = this.add.text(player.x - 20, game.config.height / 2, 'Retry', { fontSize: '34px', fill: '#e1fa00' });
+          this.retryButton = this.add.text(player.x - 20, game.config.height / 2, 'Retry', { fontSize: '34px', fontFamily: 'Georgia', fill: '#e1fa00' });
           this.retryButton.setOrigin(0.5);
           this.retryButton.setInteractive();
           this.retryButton.on('pointerdown', function () {
               window.location.href = '/';
           });
+          this.top10Button = this.add.text(player.x - 20, game.config.height / 2 + 60, 'Top-10 players', { fontSize: '34px', fontFamily: 'Georgia', fill: '#e1fa00' });
+          this.top10Button.setOrigin(0.5);
+          this.top10Button.setInteractive();
+          this.top10Button.on('pointerdown', function () {
+              window.location.href = 'top10/';
+          });
           this.retryButton.setVisible(true);
+          this.top10Button.setVisible(true);
+
           scoreSent = true;
       }
   }
@@ -295,13 +318,21 @@ function update() {
         } else {
             ScoreToBackend.call(this, sc);
             this.modal.setVisible(true);
-            this.retryButton = this.add.text(12000 - (game.config.width / 2), game.config.height / 2, 'Retry', { fontSize: '34px', fill: '#e1fa00' });
+            this.retryButton = this.add.text(12000 - (game.config.width / 2), game.config.height / 2, 'Retry', { fontSize: '34px', fontFamily: 'Georgia', fill: '#e1fa00' });
             this.retryButton.setOrigin(0.5);
             this.retryButton.setInteractive();
             this.retryButton.on('pointerdown', function () {
                 window.location.href = '/';
             });
+            this.top10Button = this.add.text(12000 - (game.config.width / 2), game.config.height / 2 + 60, 'Top-10 players', { fontSize: '34px', fontFamily: 'Georgia', fill: '#e1fa00' });
+            this.top10Button.setOrigin(0.5);
+            this.top10Button.setInteractive();
+            this.top10Button.on('pointerdown', function () {
+                window.location.href = 'top10/';
+            });
+
             this.retryButton.setVisible(true);
+            this.top10Button.setVisible(true);
 
             scoreSent = true;
         }
