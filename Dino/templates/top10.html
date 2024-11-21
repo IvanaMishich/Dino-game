@@ -24,6 +24,11 @@
             {% endfor %}
         </tbody>
     </table>
-    <h onclick="window.location.href='/';" style="color: #e20044; font-weight: bold; cursor: pointer;">PLAY</h>
+    <h onclick="window.location.href='/';" style="color: #e20044; font-weight: bold; cursor: pointer;">ИГРАТЬ</h>
+    <br>
+    <form action="{% url 'logout' %}" method="post">
+        {% csrf_token %}
+        <a href="#" onclick="this.closest('form').submit();" style="text-decoration: none; color: #a2002b; font-weight: bold;">Выйти</a>
+    </form>
 </body>
 </html>
