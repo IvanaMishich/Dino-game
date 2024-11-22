@@ -139,7 +139,7 @@ function create() {
         { x: 9900, y: 520, key: 'enemy2', offsetX: 20, offsetY: 15, speed: 600, type: 'finalway' }
     ];
 
-    this.enemyGroup = this.physics.add.staticGroup();
+    this.enemyGroup = this.physics.add.group();
 
     enemyData.forEach(data => {
         let enemy = this.physics.add.sprite(data.x, data.y, data.key).setOffset(data.offsetX, data.offsetY);
