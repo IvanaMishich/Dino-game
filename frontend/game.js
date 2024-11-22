@@ -86,56 +86,71 @@ function create() {
     this.background = this.add.tileSprite(0, 0, 12000, game.config.height, 'background').setOrigin(0, 0);
     this.cameras.main.setBounds(0, 0, 12000, game.config.height);
 
+    const sushiPositions = [
+        { x: 500, y: 200, key: 'sushi1' },
+        { x: 1500, y: 300, key: 'sushi2' },
+        { x: 2500, y: 150, key: 'sushi3' },
+        { x: 3900, y: 450, key: 'sushi4' },
+        { x: 4500, y: 220, key: 'sushi5' },
+        { x: 3400, y: 250, key: 'sushi1' },
+        { x: 5100, y: 220, key: 'sushi2' },
+        { x: 5600, y: 130, key: 'sushi3' },
+        { x: 6500, y: 350, key: 'sushi4' },
+        { x: 6900, y: 120, key: 'sushi5' },
+        { x: 7600, y: 250, key: 'sushi1' },
+        { x: 8200, y: 220, key: 'sushi2' },
+        { x: 8900, y: 450, key: 'sushi4' },
+    ];
     this.sushiGroup = this.physics.add.group();
-    this.sushiGroup.create(500, 200, 'sushi1');
-    this.sushiGroup.create(1500, 300, 'sushi2');
-    this.sushiGroup.create(2500, 150, 'sushi3');
-    this.sushiGroup.create(3900, 450, 'sushi4');
-    this.sushiGroup.create(4500, 220, 'sushi5');
-    this.sushiGroup.create(3400, 250, 'sushi1');
-    this.sushiGroup.create(5100, 220, 'sushi2');
-    this.sushiGroup.create(5600, 130, 'sushi3');
-    this.sushiGroup.create(6500, 350, 'sushi4');
-    this.sushiGroup.create(6900, 120, 'sushi5');
-    this.sushiGroup.create(7600, 250, 'sushi1');
-    this.sushiGroup.create(8200, 220, 'sushi2');
-    this.sushiGroup.create(8900, 450, 'sushi4');
+
+    sushiPositions.forEach(position => {
+        this.sushiGroup.create(position.x, position.y, position.key);
+    });
 
     this.sushiGroup.children.iterate((sushi) => {
         sushi_way(sushi);
     });
 
+    const stoneData = [
+        { x: 500, y: 495, key: 'stone1', width: 100, height: 150 },
+        { x: 1100, y: 428, key: 'stone2', width: 100, height: 250 },
+        { x: 1750, y: 480, key: 'stone3', width: 100, height: 150 },
+        { x: 3000, y: 380, key: 'stone4', width: 230, height: 320 },
+        { x: 4600, y: 460, key: 'stone5', width: 130, height: 180 },
+        { x: 6200, y: 428, key: 'stone2', width: 100, height: 250 },
+        { x: 6800, y: 495, key: 'stone1', width: 100, height: 150 },
+        { x: 7300, y: 380, key: 'stone4', width: 230, height: 320 },
+        { x: 8350, y: 460, key: 'stone5', width: 130, height: 180 },
+        { x: 10200, y: 428, key: 'stone2', width: 100, height: 250 }
+    ];
+
     this.stoneGroup = this.physics.add.staticGroup();
-    this.stoneGroup.create(500, 495, 'stone1').setSize(100, 150);
-    this.stoneGroup.create(1100, 428, 'stone2').setSize(100, 250);
-    this.stoneGroup.create(1750, 480, 'stone3').setSize(100, 150);
-    this.stoneGroup.create(3000, 380, 'stone4').setSize(230, 320);
-    this.stoneGroup.create(4600, 460, 'stone5').setSize(130, 180);
-    this.stoneGroup.create(6200, 428, 'stone2').setSize(100, 250);
-    this.stoneGroup.create(6800, 495, 'stone1').setSize(100, 150);
-    this.stoneGroup.create(7300, 380, 'stone4').setSize(230, 320);
-    this.stoneGroup.create(8350, 460, 'stone5').setSize(130, 180);
-    this.stoneGroup.create(10200, 428, 'stone2').setSize(100, 250);
 
-    this.enemy1 = this.physics.add.sprite(2500, 520, 'enemy1').setOffset(20, 15);
-    this.enemy2 = this.physics.add.sprite(3800, 520, 'enemy2').setOffset(20, 15);
-    this.enemy3 = this.physics.add.sprite(5800, 530, 'enemy3').setOffset(20, 20);
-    this.enemy4 = this.physics.add.sprite(9100, 520, 'enemy4').setOffset(20, 20);
-    this.enemy5 = this.physics.add.sprite(8100, 520, 'enemy1').setOffset(20, 15);
-    this.enemy6 = this.physics.add.sprite(9900, 520, 'enemy2').setOffset(20, 15);
-    this.enemy1.setCollideWorldBounds(true);
-    this.enemy2.setCollideWorldBounds(true);
-    this.enemy3.setCollideWorldBounds(true);
-    this.enemy4.setCollideWorldBounds(true);
-    this.enemy5.setCollideWorldBounds(true);
-    this.enemy6.setCollideWorldBounds(true);
+    stoneData.forEach(data => {
+        this.stoneGroup.create(data.x, data.y, data.key).setSize(data.width, data.height);
+    });
 
-    enemies_way(this.enemy1);
-    enemies_way(this.enemy2);
-    enemies_way(this.enemy3);
-    enemies_finalway(this.enemy4);
-    enemies_finalway(this.enemy5);
-    enemies_finalway(this.enemy6);
+    const enemyData = [
+        { x: 2500, y: 520, key: 'enemy1', offsetX: 20, offsetY: 15, speed: 300, type: 'way' },
+        { x: 3800, y: 520, key: 'enemy2', offsetX: 20, offsetY: 15, speed: 300, type: 'way' },
+        { x: 5800, y: 530, key: 'enemy3', offsetX: 20, offsetY: 20, speed: 300, type: 'way' },
+        { x: 9100, y: 520, key: 'enemy4', offsetX: 20, offsetY: 20, speed: 600, type: 'finalway' },
+        { x: 8100, y: 520, key: 'enemy1', offsetX: 20, offsetY: 15, speed: 600, type: 'finalway' },
+        { x: 9900, y: 520, key: 'enemy2', offsetX: 20, offsetY: 15, speed: 600, type: 'finalway' }
+    ];
+
+    this.enemyGroup = this.physics.add.staticGroup();
+
+    enemyData.forEach(data => {
+        let enemy = this.physics.add.sprite(data.x, data.y, data.key).setOffset(data.offsetX, data.offsetY);
+        enemy.setCollideWorldBounds(true);
+        this.enemyGroup.add(enemy);
+        if (data.type === 'way') {
+            enemies_way(enemy);
+        } else if (data.type === 'finalway') {
+            enemies_finalway(enemy);
+        }
+    });
 
     this.tree = this.physics.add.staticImage(11700, 300, 'tree');
 
@@ -153,23 +168,12 @@ function create() {
     this.ground = this.physics.add.staticGroup();
     this.ground.create(6000, game.config.height - 5, null).setDisplaySize(12000, 10).setSize(12000, 20).refreshBody().setAlpha(0);
     this.physics.add.collider(this.player, this.ground);
-    this.physics.add.collider(this.enemy1, this.ground);
-    this.physics.add.collider(this.enemy2, this.ground);
-    this.physics.add.collider(this.enemy3, this.ground);
-    this.physics.add.collider(this.enemy4, this.ground);
-    this.physics.add.collider(this.enemy5, this.ground);
-    this.physics.add.collider(this.enemy6, this.ground);
-
-    this.physics.add.collider(this.player, this.enemy1, hitEnemy, null, this);
-    this.physics.add.collider(this.player, this.enemy2, hitEnemy, null, this);
-    this.physics.add.collider(this.player, this.enemy3, hitEnemy, null, this);
-    this.physics.add.collider(this.player, this.enemy4, hitEnemy, null, this);
-    this.physics.add.collider(this.player, this.enemy5, hitEnemy, null, this);
-    this.physics.add.collider(this.player, this.enemy6, hitEnemy, null, this);
+    this.physics.add.collider(this.enemyGroup, this.ground);
+    this.physics.add.collider(this.player, this.enemyGroup, hitEnemy, null, this);
 
     this.modal = this.add.graphics();
     this.modal.fillStyle(0x000000, 0.8);
-    this.modal.fillRect(12000 - game.config.width, 0, game.config.width, game.config.height);
+    this.modal.fillRect(this.player.x - (game.config.width / 2) - 10, 0, game.config.width + 10, game.config.height);
 
     this.text = this.add.text(12000 - (game.config.width / 2), game.config.height / 2 - 20, 'Save your score by logging in!', { fontSize: '36px', fontFamily: 'Georgia', fill: '#ffffff' });
     this.text.setOrigin(0.5);
@@ -185,10 +189,17 @@ function create() {
     this.registerButton.setOrigin(0.5);
     this.registerButton.setInteractive({cursor: 'pointer'});
     this.registerButton.on('pointerdown', function () {
-        window.location.href = '/register/';
+        window.location.href = '/register/' + '?score=' + sc
     });
 
-    this.top10Button = this.add.text(12000 - (game.config.width / 2), game.config.height / 2 + 60, 'Top-10 players', { fontSize: '34px', fontFamily: 'Georgia', fill: '#e1fa00' });
+     this.retryButton = this.add.text(this.player.x - 20, game.config.height / 2, 'Retry', { fontSize: '34px', fontFamily: 'Georgia', fill: '#e1fa00' });
+     this.retryButton.setOrigin(0.5);
+     this.retryButton.setInteractive({cursor: 'pointer'});
+     this.retryButton.on('pointerdown', function () {
+         window.location.href = '/';
+     });
+
+    this.top10Button = this.add.text(this.player.x - 10, game.config.height / 2 - 10, 'Top-10 players', { fontSize: '34px', fontFamily: 'Georgia', fill: '#e1fa00' });
     this.top10Button.setOrigin(0.5);
     this.top10Button.setInteractive({cursor: 'pointer'});
     this.top10Button.on('pointerdown', function () {
@@ -225,34 +236,12 @@ function hitEnemy(player, enemy) {
       player.setTint(0xff0000);
 
       if (!playerID) {
-          this.modal = this.add.graphics();
-          this.modal.fillStyle(0x000000, 0.8);
-          this.modal.fillRect(player.x - (game.config.width / 2) - 10, 0, game.config.width + 10, game.config.height);
-          this.text = this.add.text(player.x - 300, game.config.height / 3, 'Game over. Save your score by logging in!', { fontSize: '32px', fontFamily: 'Georgia', fill: '#ffffff' });
-          this.loginButton = this.add.text(player.x - 10, game.config.height / 2 - 10, 'Login', { fontSize: '30px', fontFamily: 'Georgia', fill: '#00ff00' });
-          this.loginButton.setOrigin(0.5);
-          this.loginButton.setInteractive({cursor: 'pointer'});
-          this.loginButton.on('pointerdown', function () {
-              window.location.href = '/login/' + '?score=' + sc;
-          });
-          this.registerButton = this.add.text(player.x - 10, game.config.height / 2 + 40, 'Register', { fontSize: '30px', fontFamily: 'Georgia', fill: '#00ff00' });
-          this.registerButton.setOrigin(0.5);
-          this.registerButton.setInteractive({cursor: 'pointer'});
-          this.registerButton.on('pointerdown', function () {
-              window.location.href = '/register/' + '?score=' + sc;
-          });
-          this.retryButton = this.add.text(player.x - 15, game.config.height / 2 + 160, 'Retry', { fontSize: '30px', fontFamily: 'Georgia', fill: '#e1fa00' });
-          this.retryButton.setOrigin(0.5);
-          this.retryButton.setInteractive({cursor: 'pointer'});
-          this.retryButton.on('pointerdown', function () {
-              window.location.href = '/';
-          });
-          this.top10Button = this.add.text(player.x - 18, game.config.height / 2 + 100, 'Top-10 players', { fontSize: '34px', fontFamily: 'Georgia', fill: '#e1fa00' });
-          this.top10Button.setOrigin(0.5);
-          this.top10Button.setInteractive({cursor: 'pointer'});
-          this.top10Button.on('pointerdown', function () {
-              window.location.href = 'top10/';
-          });
+          this.text.setPosition(player.x - 300, game.config.height / 3).setText('Game over. Save your score by logging in!');
+          this.loginButton.setPosition(player.x - 10, game.config.height / 2 - 10);
+          this.registerButton.setPosition(player.x - 10, game.config.height / 2 + 40);
+          this.retryButton.setPosition(player.x - 15, game.config.height / 2 + 160);
+          this.top10Button.setPosition(player.x - 18, game.config.height / 2 + 100);
+
           this.modal.setVisible(true);
           this.text.setVisible(true);
           this.loginButton.setVisible(true);
@@ -260,22 +249,10 @@ function hitEnemy(player, enemy) {
           this.top10Button.setVisible(true);
       } else {
           ScoreToBackend.call(this, sc);
-          this.modal = this.add.graphics();
-          this.modal.fillStyle(0x000000, 0.8);
-          this.modal.fillRect(player.x - (game.config.width / 2), 0, game.config.width + 10, game.config.height);
+
+          this.top10Button.setPosition(player.x - 20, game.config.height / 2 + 60);
+
           this.modal.setVisible(true);
-          this.retryButton = this.add.text(player.x - 20, game.config.height / 2, 'Retry', { fontSize: '34px', fontFamily: 'Georgia', fill: '#e1fa00' });
-          this.retryButton.setOrigin(0.5);
-          this.retryButton.setInteractive({cursor: 'pointer'});
-          this.retryButton.on('pointerdown', function () {
-              window.location.href = '/';
-          });
-          this.top10Button = this.add.text(player.x - 20, game.config.height / 2 + 60, 'Top-10 players', { fontSize: '34px', fontFamily: 'Georgia', fill: '#e1fa00' });
-          this.top10Button.setOrigin(0.5);
-          this.top10Button.setInteractive({cursor: 'pointer'});
-          this.top10Button.on('pointerdown', function () {
-              window.location.href = 'top10/';
-          });
           this.retryButton.setVisible(true);
           this.top10Button.setVisible(true);
 
@@ -315,40 +292,16 @@ function update() {
         } else {
             this.physics.pause();
             if (this.player.x < (game.config.width / 2)) {
-                this.modal = this.add.graphics();
-                this.modal.fillRect(0, 0, game.config.width, game.config.height);
-                this.modal.fillStyle(0x000000, 0.8);
-                this.retryButton = this.add.text((game.config.width / 2) - 20, game.config.height / 2, 'Retry', { fontSize: '34px', fontFamily: 'Georgia', fill: '#e1fa00' });
-                this.retryButton.setOrigin(0.5);
-                this.retryButton.setInteractive({cursor: 'pointer'});
-                this.retryButton.on('pointerdown', function () {
-                    window.location.href = '/';
-                });
-                this.top10Button = this.add.text((game.config.width / 2) - 20, game.config.height / 2 + 60, 'Top-10 players', { fontSize: '34px', fontFamily: 'Georgia', fill: '#e1fa00' });
-                this.top10Button.setOrigin(0.5);
-                this.top10Button.setInteractive({cursor: 'pointer'});
-                this.top10Button.on('pointerdown', function () {
-                    window.location.href = 'top10/';
-                });
+                this.modal.setPosition(0, 0);
+                this.retryButton.setPosition((game.config.width / 2) - 20, game.config.height / 2);
+                this.top10Button.setPosition((game.config.width / 2) - 20, game.config.height / 2 + 60);
+
                 this.modal.setVisible(true);
                 this.retryButton.setVisible(true);
                 this.top10Button.setVisible(true);
             } else {
-                this.modal = this.add.graphics();
-                this.modal.fillRect(this.player.x - (game.config.width / 2), 0, game.config.width + 10, game.config.height);
-                this.modal.fillStyle(0x000000, 0.8);
-                this.retryButton = this.add.text(this.player.x - 20, game.config.height / 2, 'Retry', { fontSize: '34px', fontFamily: 'Georgia', fill: '#e1fa00' });
-                this.retryButton.setOrigin(0.5);
-                this.retryButton.setInteractive({cursor: 'pointer'});
-                this.retryButton.on('pointerdown', function () {
-                    window.location.href = '/';
-                });
-                this.top10Button = this.add.text(this.player.x - 20, game.config.height / 2 + 60, 'Top-10 players', { fontSize: '34px', fontFamily: 'Georgia', fill: '#e1fa00' });
-                this.top10Button.setOrigin(0.5);
-                this.top10Button.setInteractive({cursor: 'pointer'});
-                this.top10Button.on('pointerdown', function () {
-                    window.location.href = 'top10/';
-                });
+                this.top10Button.setPosition(this.player.x - 20, game.config.height / 2 + 60);
+
                 this.modal.setVisible(true);
                 this.retryButton.setVisible(true);
                 this.top10Button.setVisible(true);
@@ -366,26 +319,18 @@ function update() {
         this.physics.pause();
 
         if (!playerID) {
+            this.modal.setPosition(12000 - game.config.width, 0);
             this.modal.setVisible(true);
             this.text.setVisible(true);
             this.loginButton.setVisible(true);
             this.registerButton.setVisible(true);
         } else {
             ScoreToBackend.call(this, sc);
-            this.modal.fillRect(12000 - game.config.width, 0, game.config.width, game.config.height);
+            this.modal.setPosition(12000 - game.config.width, 0);
             this.modal.setVisible(true);
-            this.retryButton = this.add.text(12000 - (game.config.width / 2), game.config.height / 2, 'Retry', { fontSize: '34px', fontFamily: 'Georgia', fill: '#e1fa00' });
-            this.retryButton.setOrigin(0.5);
-            this.retryButton.setInteractive({cursor: 'pointer'});
-            this.retryButton.on('pointerdown', function () {
-                window.location.href = '/';
-            });
-            this.top10Button = this.add.text(12000 - (game.config.width / 2), game.config.height / 2 + 60, 'Top-10 players', { fontSize: '34px', fontFamily: 'Georgia', fill: '#e1fa00' });
-            this.top10Button.setOrigin(0.5);
-            this.top10Button.setInteractive({cursor: 'pointer'});
-            this.top10Button.on('pointerdown', function () {
-                window.location.href = 'top10/';
-            });
+
+            this.retryButton.setPosition(12000 - (game.config.width / 2), game.config.height / 2);
+            this.top10Button.setPosition(12000 - (game.config.width / 2), game.config.height / 2 + 60);
 
             this.retryButton.setVisible(true);
             this.top10Button.setVisible(true);
@@ -394,12 +339,11 @@ function update() {
         }
     }
 
-    enemies_direction(this.enemy1);
-    enemies_direction(this.enemy2);
-    enemies_direction(this.enemy3);
-    enemies_direction(this.enemy4);
-    enemies_direction(this.enemy5);
-    enemies_direction(this.enemy6);
+    this.enemyGroup.children.iterate((enemy) => {
+        if (enemy.active) {
+            enemies_direction(enemy);
+        }
+    });
 
     this.sushiGroup.children.iterate((sushi) => {
         if (sushi.active) {
