@@ -308,10 +308,12 @@ function update() {
 
     if (Phaser.Input.Keyboard.JustDown(this.escape)) {
         if (this.modal.visible) {
+            this.physics.resume();
             this.modal.setVisible(false);
             this.retryButton.setVisible(false);
             this.top10Button.setVisible(false);
         } else {
+            this.physics.pause();
             if (this.player.x < (game.config.width / 2)) {
                 this.modal = this.add.graphics();
                 this.modal.fillRect(0, 0, game.config.width, game.config.height);
