@@ -5,7 +5,7 @@
     <title>Top-10</title>
 </head>
 <body style="text-align: center; display: flex; flex-direction: column; justify-content: center; font-size: 24px; color: #343434; font-family: Georgia; background: radial-gradient(circle, #f5ffda, #ffc3ae);">
-    <h style="font-size: 32px; font-weight: bold; margin-top: 30px; margin-bottom: 10px;">ТОП-10 Игроков 🏆</h>
+    <h style="font-size: 32px; font-weight: bold; margin-top: 30px; margin-bottom: 10px;">Top-10 Players 🏆</h>
     <table style="width: 20%; margin: 0 auto; margin-top: 30px; margin-bottom: 30px; color: #3f3f3f; border: 3px dotted #ffbba0; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
         <thead>
             <tr style="font-weight: bold;">
@@ -24,11 +24,11 @@
             {% endfor %}
         </tbody>
     </table>
-    <h onclick="window.location.href='/';" style="color: #e20044; font-weight: bold; cursor: pointer;">ИГРАТЬ</h>
+    <h onclick="window.location.href='/';" style="color: #e20044; font-weight: bold; cursor: pointer;">PLAY</h>
     <br>
     <form action="{% url 'logout' %}" method="post">
         {% csrf_token %}
-        <a href="#" onclick="this.closest('form').submit();" style="text-decoration: none; color: #a2002b; font-weight: bold;">Выйти</a>
+        <a href="#" onclick="this.closest('form').submit();" style="text-decoration: none; color: #a2002b; font-weight: bold;">LOG OUT</a>
     </form>
 </body>
 </html>

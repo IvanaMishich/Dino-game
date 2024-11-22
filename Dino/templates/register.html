@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Регистрация</title>
+    <title>Registration</title>
 </head>
 <body style="display: flex; flex-direction: column; justify-content: center; align-items: center; font-family: Georgia; background: radial-gradient(circle, #bcfff7, #ffd2e1);">
-    <h1 style="color: #3ebbb7; margin-top: 30px; margin-bottom: 30px;">Регистрация</h1>
+    <h1 style="color: #3ebbb7; margin-top: 30px; margin-bottom: 30px;">Registration</h1>
     <form method="post" style="display: flex; flex-direction: column; justify-content: center; text-align: left;">
         {% csrf_token %}
         {{ form.as_p }}
         <input type="hidden" name="score" value="{{ request.GET.score }}">
         <br>
-        <button type="submit" style="font-size: 17px; font-family: Georgia; font-weight: bold; color: #ff548a; display: block; margin: 0 auto;">Зарегистрироваться</button>
+        <button type="submit" style="font-size: 17px; font-family: Georgia; font-weight: bold; color: #ff548a; display: block; margin: 0 auto;">Register</button>
     </form>
 </body>
 </html>
