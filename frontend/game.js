@@ -131,20 +131,20 @@ function create() {
     });
 
     const enemyData = [
-        { x: 2500, y: 520, key: 'enemy1', offsetX: 20, offsetY: 15, speed: 300, type: 'way' },
-        { x: 3800, y: 520, key: 'enemy2', offsetX: 20, offsetY: 15, speed: 300, type: 'way' },
-        { x: 5800, y: 530, key: 'enemy3', offsetX: 20, offsetY: 20, speed: 300, type: 'way' },
-        { x: 9100, y: 520, key: 'enemy4', offsetX: 20, offsetY: 20, speed: 600, type: 'finalway' },
-        { x: 8100, y: 520, key: 'enemy1', offsetX: 20, offsetY: 15, speed: 600, type: 'finalway' },
-        { x: 9900, y: 520, key: 'enemy2', offsetX: 20, offsetY: 15, speed: 600, type: 'finalway' }
+        { x: 2500, y: 490, key: 'enemy1', offsetX: 20, offsetY: 15, speed: 300, type: 'way' },
+        { x: 3800, y: 490, key: 'enemy2', offsetX: 20, offsetY: 15, speed: 300, type: 'way' },
+        { x: 5800, y: 490, key: 'enemy3', offsetX: 20, offsetY: 20, speed: 300, type: 'way' },
+        { x: 9100, y: 490, key: 'enemy4', offsetX: 20, offsetY: 20, speed: 600, type: 'finalway' },
+        { x: 8100, y: 490, key: 'enemy1', offsetX: 20, offsetY: 15, speed: 600, type: 'finalway' },
+        { x: 9900, y: 490, key: 'enemy2', offsetX: 20, offsetY: 15, speed: 600, type: 'finalway' }
     ];
 
     this.enemyGroup = this.physics.add.group();
 
     enemyData.forEach(data => {
-        let enemy = this.physics.add.sprite(data.x, data.y, data.key).setOffset(data.offsetX, data.offsetY);
+        let enemy = this.enemyGroup.create(data.x, data.y, data.key);
+        enemy.setOffset(data.offsetX, data.offsetY);
         enemy.setCollideWorldBounds(true);
-        this.enemyGroup.add(enemy);
         if (data.type === 'way') {
             enemies_way(enemy);
         } else if (data.type === 'finalway') {
@@ -236,11 +236,19 @@ function hitEnemy(player, enemy) {
       player.setTint(0xff0000);
 
       if (!playerID) {
+          this.modal = this.add.graphics();
+          this.modal.fillStyle(0x000000, 0.8);
+          this.modal.fillRect(this.player.x - (game.config.width / 2) - 10, 0, game.config.width + 10, game.config.height);
           this.text.setPosition(player.x - 300, game.config.height / 3).setText('Game over. Save your score by logging in!');
+          this.text.setDepth(10);
           this.loginButton.setPosition(player.x - 10, game.config.height / 2 - 10);
+          this.loginButton.setDepth(10);
           this.registerButton.setPosition(player.x - 10, game.config.height / 2 + 40);
+          this.registerButton.setDepth(10);
           this.retryButton.setPosition(player.x - 15, game.config.height / 2 + 160);
+          this.retryButton.setDepth(10);
           this.top10Button.setPosition(player.x - 18, game.config.height / 2 + 100);
+          this.top10Button.setDepth(10);
 
           this.modal.setVisible(true);
           this.text.setVisible(true);
@@ -249,8 +257,13 @@ function hitEnemy(player, enemy) {
           this.top10Button.setVisible(true);
       } else {
           ScoreToBackend.call(this, sc);
-
+          this.modal = this.add.graphics();
+          this.modal.fillStyle(0x000000, 0.8);
+          this.modal.fillRect(this.player.x - (game.config.width / 2) - 10, 0, game.config.width + 10, game.config.height);
+          this.retryButton.setPosition(this.player.x - 20, game.config.height / 2);
+          this.retryButton.setDepth(10);
           this.top10Button.setPosition(player.x - 20, game.config.height / 2 + 60);
+          this.top10Button.setDepth(10);
 
           this.modal.setVisible(true);
           this.retryButton.setVisible(true);
@@ -292,15 +305,25 @@ function update() {
         } else {
             this.physics.pause();
             if (this.player.x < (game.config.width / 2)) {
-                this.modal.setPosition(0, 0);
+                this.modal = this.add.graphics();
+                this.modal.fillStyle(0x000000, 0.8);
+                this.modal.fillRect(0, 0, game.config.width + 10, game.config.height);
                 this.retryButton.setPosition((game.config.width / 2) - 20, game.config.height / 2);
+                this.retryButton.setDepth(10);
                 this.top10Button.setPosition((game.config.width / 2) - 20, game.config.height / 2 + 60);
+                this.top10Button.setDepth(10);
 
                 this.modal.setVisible(true);
                 this.retryButton.setVisible(true);
                 this.top10Button.setVisible(true);
             } else {
+                this.modal = this.add.graphics();
+                this.modal.fillStyle(0x000000, 0.8);
+                this.modal.fillRect(this.player.x - (game.config.width / 2) - 10, 0, game.config.width + 10, game.config.height);
+                this.retryButton.setPosition(this.player.x - 20, game.config.height / 2);
+                this.retryButton.setDepth(10);
                 this.top10Button.setPosition(this.player.x - 20, game.config.height / 2 + 60);
+                this.top10Button.setDepth(10);
 
                 this.modal.setVisible(true);
                 this.retryButton.setVisible(true);
@@ -319,18 +342,27 @@ function update() {
         this.physics.pause();
 
         if (!playerID) {
-            this.modal.setPosition(12000 - game.config.width, 0);
+            this.modal = this.add.graphics();
+            this.modal.fillStyle(0x000000, 0.8);
+            this.modal.fillRect(12000 - game.config.width, 0, game.config.width + 10, game.config.height);
             this.modal.setVisible(true);
+            this.text.setDepth(10);
             this.text.setVisible(true);
+            this.loginButton.setDepth(10);
             this.loginButton.setVisible(true);
+            this.registerButton.setDepth(10);
             this.registerButton.setVisible(true);
         } else {
             ScoreToBackend.call(this, sc);
-            this.modal.setPosition(12000 - game.config.width, 0);
+            this.modal = this.add.graphics();
+            this.modal.fillStyle(0x000000, 0.8);
+            this.modal.fillRect(12000 - game.config.width, 0, game.config.width + 10, game.config.height);
             this.modal.setVisible(true);
 
             this.retryButton.setPosition(12000 - (game.config.width / 2), game.config.height / 2);
+            this.retryButton.setDepth(10);
             this.top10Button.setPosition(12000 - (game.config.width / 2), game.config.height / 2 + 60);
+            this.top10Button.setDepth(10);
 
             this.retryButton.setVisible(true);
             this.top10Button.setVisible(true);
@@ -349,6 +381,10 @@ function update() {
         if (sushi.active) {
             sushi_direction(sushi);
         }
+    });
+
+    this.enemyGroup.children.iterate((enemy) => {
+        console.log(`Enemy position: x=${enemy.x}, y=${enemy.y}`);
     });
 }
 
