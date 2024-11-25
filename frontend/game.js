@@ -238,8 +238,8 @@ function hitEnemy(player, enemy) {
       if (!playerID) {
           this.modal = this.add.graphics();
           this.modal.fillStyle(0x000000, 0.8);
-          this.modal.fillRect(this.player.x - (game.config.width / 2) - 10, 0, game.config.width + 10, game.config.height);
-          this.text.setPosition(player.x - 300, game.config.height / 3).setText('Game over. Save your score by logging in!');
+          this.modal.fillRect(player.x - (game.config.width / 2) - 10, 0, game.config.width + 10, game.config.height);
+          this.text.setPosition(player.x, game.config.height / 3).setText('Game over. Save your score by logging in!');
           this.text.setDepth(10);
           this.loginButton.setPosition(player.x - 10, game.config.height / 2 - 10);
           this.loginButton.setDepth(10);
@@ -381,10 +381,6 @@ function update() {
         if (sushi.active) {
             sushi_direction(sushi);
         }
-    });
-
-    this.enemyGroup.children.iterate((enemy) => {
-        console.log(`Enemy position: x=${enemy.x}, y=${enemy.y}`);
     });
 }
 
