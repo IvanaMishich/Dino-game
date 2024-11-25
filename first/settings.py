@@ -58,6 +58,8 @@ MIDDLEWARE = [
     'Dino.my_middleware.MyMiddlware',
 ]
 
+X_FRAME_OPTIONS = 'ALLOWALL'
+
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 ROOT_URLCONF = 'first.urls'
