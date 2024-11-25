@@ -209,6 +209,7 @@ function create() {
     this.modal.setVisible(false);
     this.text.setVisible(false);
     this.loginButton.setVisible(false);
+    this.retryButton.setVisible(false);
     this.registerButton.setVisible(false);
     this.top10Button.setVisible(false);
 
