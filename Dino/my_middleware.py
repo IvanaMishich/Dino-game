@@ -5,7 +5,7 @@ class MyMiddlware:
         self.get_response = get_response
 
     def __call__(self, request):
-        # Действия, выполняемые перед выполнением view
+        # Actions performed before executing the view /Действия, выполняемые перед выполнением view
         response = self.get_response(request)
-        # Действия, выполняемые после выполнения view
+        # Actions performed after executing the view /Действия, выполняемые после выполнения view
         return response

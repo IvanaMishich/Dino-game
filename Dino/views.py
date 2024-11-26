@@ -9,6 +9,7 @@ from .models import CustomUser, Levels
 from .serializers import UsersSerializer, LevelsSerializer
 
 
+# View to render the main page with the current user's ID /Представление для рендеринга главной страницы с ID текущего пользователя
 def index(request):
     user = request.user
     context = {
@@ -17,6 +18,7 @@ def index(request):
     return render(request, 'index.html', context)
 
 
+# ViewSet for managing players through the API /ViewSet для управления пользователями через API
 class UsersViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
     serializer_class = UsersSerializer
@@ -31,11 +33,13 @@ class UsersViewSet(viewsets.ModelViewSet):
         return [permissions.IsAdminUser()]
 
 
+# View to render the top 10 players based on their score /Представление для отображения топ-10 игроков по их очкам
 def top10(request):
     top = CustomUser.objects.order_by('-score')[:10]
     return render(request, 'top10.html', {'top10': top})
 
 
+# ViewSet for managing levels through the API /Представление для управления уровнями через API
 class LevelsViewSet(viewsets.ModelViewSet):
     queryset = Levels.objects.all()
     serializer_class = LevelsSerializer
@@ -48,6 +52,7 @@ class LevelsViewSet(viewsets.ModelViewSet):
         return [permissions.IsAdminUser()]
 
 
+# View to render user registration page /Представление для рендеринга страницы регистрации пользователя
 def registration(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
@@ -63,6 +68,7 @@ def registration(request):
     return render(request, 'register.html', {'form': form})
 
 
+# Custom login view with additional score handling /Кастомное представление для входа с дополнительной обработкой очков
 class CustomLoginView(auth_views.LoginView):
     authentication_form = CustomLoginForm
 

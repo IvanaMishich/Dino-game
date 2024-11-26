@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser, Group, Permission
 
 
+# Model for game levels with score range /Модель уровней игры с диапазоном очков
 class Levels(models.Model):
     level = models.IntegerField(
         null=True,
@@ -17,6 +18,7 @@ class Levels(models.Model):
     )
 
 
+# Custom user model with score and level / Пользовательская модель с очками и уровнем
 class CustomUser(AbstractUser):
     score = models.IntegerField(
         verbose_name="Очки",

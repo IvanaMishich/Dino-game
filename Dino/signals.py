@@ -8,6 +8,7 @@ from .models import CustomUser
 User = get_user_model()
 
 
+# A signal to save points in the database and send a notification if the record is broken /Сигнал для сохранения очков в базе данных и отправки уведомления в случае, если побит рекорд
 @receiver(pre_save, sender=User)
 def send_message(sender, instance, **kwargs):
     if instance.pk:
