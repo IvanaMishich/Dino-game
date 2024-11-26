@@ -1,6 +1,8 @@
 
+// The score counter /Счетчик очков
 let sc = 0;
 
+// Uploading all images /Загрузка всех изображений
 function preload() {
     this.load.image('Dino', 'static/images/Dino.png');
     this.load.image('background', 'static/images/Background.png');
@@ -21,6 +23,7 @@ function preload() {
     this.load.image('tree', 'static/images/tree.png');
 }
 
+// Parameters for enemy movement /Параметры для движения врагов
 function enemies_way(enemy) {
     enemy.minX = enemy.x - 500;
     enemy.maxX = enemy.x;
@@ -35,6 +38,7 @@ function enemies_finalway(enemy) {
     enemy.direction = -1;
 }
 
+// The logic of enemy movement /Логика движения врагов
 function enemies_direction(enemy) {
     if (enemy.x <= enemy.minX) {
         enemy.direction = 1;
@@ -46,6 +50,7 @@ function enemies_direction(enemy) {
     enemy.setVelocityX(enemy.speed * enemy.direction);
 }
 
+// Parameters for sushi movement /Параметры для движения суши
 function sushi_way(sushi) {
     sushi.minY = sushi.y;
     sushi.maxY = sushi.y + 20;
@@ -53,6 +58,7 @@ function sushi_way(sushi) {
     sushi.direction = -1;
 }
 
+// The logic of sushi movement /Логика движения суши
 function sushi_direction(sushi) {
     if (sushi.y <= sushi.minY) {
         sushi.direction = 1;
@@ -62,6 +68,7 @@ function sushi_direction(sushi) {
     sushi.setVelocityY(sushi.speed * sushi.direction);
 }
 
+// Sending scores to the backend /Отправка очков в бекэнд
 function ScoreToBackend(score) {
     fetch(`/players/${playerID}/`, {
         method: 'PATCH',
@@ -109,7 +116,7 @@ function create() {
 
     this.sushiGroup.children.iterate((sushi) => {
         sushi_way(sushi);
-    });
+    }); // adding motion parameters for each sushi /добавляем параметры движения для каждой суши
 
     const stoneData = [
         { x: 500, y: 495, key: 'stone1', width: 100, height: 150 },
@@ -143,9 +150,9 @@ function create() {
 
     enemyData.forEach(data => {
         let enemy = this.enemyGroup.create(data.x, data.y, data.key);
-        enemy.setOffset(data.offsetX, data.offsetY);
+        enemy.setOffset(data.offsetX, data.offsetY); // displacement of the interaction area along the X and Y axes /смещение области взаимодействия по осям X и Y
         enemy.setCollideWorldBounds(true);
-        if (data.type === 'way') {
+        if (data.type === 'way') { // adding motion parameters for each enemy /добавляем параметры движения для каждого врага
             enemies_way(enemy);
         } else if (data.type === 'finalway') {
             enemies_finalway(enemy);
@@ -171,6 +178,7 @@ function create() {
     this.physics.add.collider(this.enemyGroup, this.ground);
     this.physics.add.collider(this.player, this.enemyGroup, hitEnemy, null, this);
 
+    // Creating a pop-up window with background, text and buttons /Создание всплывающего окна с фоном, текстом и кнопками
     this.modal = this.add.graphics();
     this.modal.fillStyle(0x000000, 0.8);
     this.modal.fillRect(this.player.x - (game.config.width / 2) - 10, 0, game.config.width + 10, game.config.height);
@@ -206,6 +214,7 @@ function create() {
         window.location.href = 'top10/';
     });
 
+    // Making the components of the pop-up window invisible /Делаем компоненты всплывающего окна невидимыми
     this.modal.setVisible(false);
     this.text.setVisible(false);
     this.loginButton.setVisible(false);
@@ -213,17 +222,20 @@ function create() {
     this.registerButton.setVisible(false);
     this.top10Button.setVisible(false);
 
+    // Displaying the score counter /Отображение счётчика очков
     this.ScoreText = this.add.text(10, 10, `SCORE: ${sc}`, { fontSize: '30px', fontFamily: 'Georgia', fill: '#ff1b79' });
 }
 
+// Function when the player and sushi collide /Функция при столкновении игрока с суши
 function collectSushi(player, sushi) {
-    sushi.disableBody(true, true); // Make the sushi disappear
+    sushi.disableBody(true, true); // Make the sushi disappear /Делаем исчезновение суши
     sc += 1;
-    this.ScoreText.text = `SCORE: ${sc}`;
+    this.ScoreText.text = `SCORE: ${sc}`; // Updating the score on the screen /Обновляем очки на экране
 }
 
+// Function when the player and enemy collide /Функция при столкновении игрока с врагом
 function hitEnemy(player, enemy) {
-  if (player.y < enemy.y - enemy.height/2) {
+  if (player.y < enemy.y - enemy.height/2) { // If the player touches the enemy from above /Если игрок коснулся врага сверху
       enemy.setTint(0xff0000);
       this.physics.pause();
       this.anims.pauseAll();
@@ -236,7 +248,7 @@ function hitEnemy(player, enemy) {
       this.physics.pause();
       player.setTint(0xff0000);
 
-      if (!playerID) {
+      if (!playerID) { // If the player is not logged in /Если игрок незалогинен
           this.modal = this.add.graphics();
           this.modal.fillStyle(0x000000, 0.8);
           this.modal.fillRect(player.x - (game.config.width / 2) - 10, 0, game.config.width + 10, game.config.height);
@@ -275,7 +287,7 @@ function hitEnemy(player, enemy) {
   }
 }
 
-let scoreSent = false;
+let scoreSent = false; // Flag to prevent duplicate data sending /Флаг для предотвращения дублирования отправки данных
 
 function update() {
     if (this.player.body.touching.down) {
@@ -297,7 +309,7 @@ function update() {
         this.jumpsinair++;
     }
 
-    if (Phaser.Input.Keyboard.JustDown(this.escape)) {
+    if (Phaser.Input.Keyboard.JustDown(this.escape)) { // Opening or closing a pop-up window when pressing ESC /Вызов или закрытие всплывающего окна при нажатии ESC
         if (this.modal.visible) {
             this.physics.resume();
             this.modal.setVisible(false);
@@ -333,12 +345,14 @@ function update() {
         }
     }
 
+    // Camera movement when reaching the end of the game /Движение камеры при достижении конца игры
     if (this.player.x > game.config.width / 2 && this.cameras.main.scrollX < this.background.width - game.config.width) {
         this.cameras.main.scrollX = this.player.x - game.config.width / 2;
         this.background.tilePositionX = this.cameras.main.scrollX * 0.1;
         this.ScoreText.x = this.player.x + 10 - game.config.width / 2;
     }
 
+    // Opening the final game window /Открытие финального окна игры
     if (this.player.x > 11700 && !scoreSent) {
         this.physics.pause();
 
@@ -402,5 +416,5 @@ const config = {
         update: update
     }
 };
-const game = new Phaser.Game(config);
 
+const game = new Phaser.Game(config);
