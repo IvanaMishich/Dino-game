@@ -368,6 +368,8 @@ function update() {
             this.loginButton.setVisible(true);
             this.registerButton.setDepth(10);
             this.registerButton.setVisible(true);
+
+            scoreSent = true;
         } else {
             ScoreToBackend.call(this, sc);
             this.modal = this.add.graphics();
