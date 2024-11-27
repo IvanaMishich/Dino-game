@@ -268,6 +268,7 @@ function hitEnemy(player, enemy) {
           this.loginButton.setVisible(true);
           this.registerButton.setVisible(true);
           this.top10Button.setVisible(true);
+          this.retryButton.setVisible(true);
       } else {
           ScoreToBackend.call(this, sc);
           this.modal = this.add.graphics();
