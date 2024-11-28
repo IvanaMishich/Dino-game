@@ -26,9 +26,11 @@
     </table>
     <h onclick="window.location.href='/';" style="color: #e20044; font-weight: bold; cursor: pointer;">PLAY</h>
     <br>
+    {% if request.user.is_authenticated %}
     <form action="{% url 'logout' %}" method="post">
         {% csrf_token %}
         <a href="#" onclick="this.closest('form').submit();" style="text-decoration: none; color: #a2002b; font-weight: bold;">LOG OUT</a>
     </form>
+    {% endif %}
 </body>
 </html>
